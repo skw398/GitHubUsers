@@ -13,8 +13,12 @@ final class UserListViewModel: ObservableObject {
     @Published var isLoading = false
     @Published var showError: (isShowing: Bool, message: String) = (false, "")
 
-    private let repo = GitHubUsersRepository()
+    private let repo: GitHubUsersRepositoryProtocol
     private var fetchUsersTask: AnyCancellable? = nil
+
+    init(repo: GitHubUsersRepositoryProtocol) {
+        self.repo = repo
+    }
 
     func fetchUsers() {
         isLoading = true

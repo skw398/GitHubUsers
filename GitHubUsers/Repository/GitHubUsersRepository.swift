@@ -8,7 +8,7 @@
 import APIKit
 import Combine
 
-final class GitHubUsersRepository {
+final class GitHubUsersRepository: GitHubUsersRepositoryProtocol {
     private var request = GitHubUsersRequest()
 
     func fetchUsers(userCount: Int, startId: Int) -> Future<[User], SessionTaskError> {

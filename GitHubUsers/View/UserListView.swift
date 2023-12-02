@@ -9,7 +9,7 @@ import Combine
 import SwiftUI
 
 struct UserListView: View {
-    @StateObject var vm = UserListViewModel()
+    @StateObject var vm = UserListViewModel(repo: GitHubUsersRepository())
 
     var body: some View {
         NavigationView {

@@ -22,6 +22,7 @@
 		B444903F2B19F39C004869AE /* UserListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B444903E2B19F39C004869AE /* UserListView.swift */; };
 		B44490412B19F3D2004869AE /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B44490402B19F3D2004869AE /* WebView.swift */; };
 		B44490432B1AC24B004869AE /* APIKit.SessionTaskError+.swift in Sources */ = {isa = PBXBuildFile; fileRef = B44490422B1AC24B004869AE /* APIKit.SessionTaskError+.swift */; };
+		B44490452B1B47D3004869AE /* GitHubUsersRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B44490442B1B47D3004869AE /* GitHubUsersRepositoryProtocol.swift */; };
 		F0CCBEBBCBDF313AE41ED15E /* Pods_GitHubUsers.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA559C7972AAC701280F5B93 /* Pods_GitHubUsers.framework */; };
 		FF1FE719419B1EE800A602DF /* Pods_GitHubUsers_GitHubUsersUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81399576A4820313B63E86DD /* Pods_GitHubUsers_GitHubUsersUITests.framework */; };
 /* End PBXBuildFile section */
@@ -66,6 +67,7 @@
 		B444903E2B19F39C004869AE /* UserListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListView.swift; sourceTree = "<group>"; };
 		B44490402B19F3D2004869AE /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
 		B44490422B1AC24B004869AE /* APIKit.SessionTaskError+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "APIKit.SessionTaskError+.swift"; sourceTree = "<group>"; };
+		B44490442B1B47D3004869AE /* GitHubUsersRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHubUsersRepositoryProtocol.swift; sourceTree = "<group>"; };
 		BC12BD9335B819B1AA0C8054 /* Pods-GitHubUsers.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GitHubUsers.release.xcconfig"; path = "Target Support Files/Pods-GitHubUsers/Pods-GitHubUsers.release.xcconfig"; sourceTree = "<group>"; };
 		E35B89FF70B4A06A45E7BF45 /* Pods-GitHubUsersTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GitHubUsersTests.debug.xcconfig"; path = "Target Support Files/Pods-GitHubUsersTests/Pods-GitHubUsersTests.debug.xcconfig"; sourceTree = "<group>"; };
 		E971D9324D37E4556B154FC5 /* Pods-GitHubUsersTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GitHubUsersTests.release.xcconfig"; path = "Target Support Files/Pods-GitHubUsersTests/Pods-GitHubUsersTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -190,6 +192,7 @@
 				B44490342B19ED2C004869AE /* GitHubUsersRepository.swift */,
 				B44490362B19EF0A004869AE /* GitHubUsersRequest.swift */,
 				B44490422B1AC24B004869AE /* APIKit.SessionTaskError+.swift */,
+				B44490442B1B47D3004869AE /* GitHubUsersRepositoryProtocol.swift */,
 			);
 			path = Repository;
 			sourceTree = "<group>";
@@ -467,6 +470,7 @@
 				B44490352B19ED2C004869AE /* GitHubUsersRepository.swift in Sources */,
 				B444903D2B19F34F004869AE /* UserListCellView.swift in Sources */,
 				B44490432B1AC24B004869AE /* APIKit.SessionTaskError+.swift in Sources */,
+				B44490452B1B47D3004869AE /* GitHubUsersRepositoryProtocol.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
