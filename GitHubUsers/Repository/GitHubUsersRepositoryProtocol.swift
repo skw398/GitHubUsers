@@ -8,6 +8,7 @@
 import APIKit
 import Combine
 
+/// @mockable
 protocol GitHubUsersRepositoryProtocol {
     func fetchUsers(userCount: Int, startId: Int) -> Future<[User], SessionTaskError>
 }
