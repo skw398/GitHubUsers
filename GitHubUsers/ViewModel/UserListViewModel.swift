@@ -25,7 +25,7 @@ final class UserListViewModel: ObservableObject {
 
         fetchUsersTask?.cancel()
         fetchUsersTask = repo.fetchUsers(userCount: 20, startId: users.last?.id ?? 0)
-            .delay(for: .seconds(0.5), scheduler: RunLoop.main) // デバッグ
+//            .delay(for: .seconds(0.5), scheduler: RunLoop.main) // デバッグ
             .sink(
                 receiveCompletion: { [weak self] completion in
                     guard let self else { return }

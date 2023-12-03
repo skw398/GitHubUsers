@@ -5,32 +5,44 @@
 //  Created by Shigenari Oshio on 2023/12/01.
 //
 
-import XCTest
+import APIKit
+import Combine
 @testable import GitHubUsers
+import XCTest
 
 final class GitHubUsersTests: XCTestCase {
+    var mock = GitHubUsersRepositoryProtocolMock()
 
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-    }
-
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
-
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // Any test you write for XCTest can be annotated as throws and async.
-        // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
-        // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
-    }
-
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
+    func testFetchUsersSuccess() throws {
+        mock.fetchUsersHandler = { _, _ in
+            Future<[User], SessionTaskError> { promise in
+                promise(.success(
+                    [.init(
+                        id: 0,
+                        name: "skw398",
+                        htmlUrl: .init(string: "https://github.com/skw398")!,
+                        avatarUrl: .init(string: "https://avatars.githubusercontent.com/u/114917347?v=4")!
+                    )]
+                ))
+            }
         }
+        let model = UserListViewModel(repo: mock)
+        model.fetchUsers()
+
+        XCTAssertEqual(mock.fetchUsersCallCount, 1)
+        XCTAssertEqual(model.users.count, 1)
     }
 
+    func testFetchUsersFailure() throws {
+        mock.fetchUsersHandler = { _, _ in
+            Future<[User], SessionTaskError> { promise in
+                promise(.failure(.connectionError(NSError())))
+            }
+        }
+        let model = UserListViewModel(repo: mock)
+        model.fetchUsers()
+
+        XCTAssertEqual(mock.fetchUsersCallCount, 1)
+        XCTAssertTrue(model.showError.isShowing)
+    }
 }
