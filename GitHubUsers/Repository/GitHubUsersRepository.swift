@@ -22,4 +22,10 @@ final class GitHubUsersRepository: GitHubUsersRepositoryProtocol {
             }
         }
     }
+
+    func fetchUsers(userCount: Int, startId: Int) async throws -> [User] {
+        request.setQuery(since: startId, perPage: userCount)
+
+        return try await Session.response(for: request)
+    }
 }

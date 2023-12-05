@@ -8,8 +8,8 @@
 import Combine
 import SwiftUI
 
-struct UserListView: View {
-    @StateObject var vm = UserListViewModel(repo: GitHubUsersRepository())
+struct UserListView<ViewModel: UserListViewModelProtocol>: View {
+    @StateObject var vm: ViewModel
 
     var body: some View {
         NavigationView {
@@ -47,13 +47,21 @@ struct UserListView: View {
                 Text(vm.showError.message)
             }
             .listStyle(.plain)
-            .navigationBarTitle("GitHub Users")
+            .navigationBarTitle(vm.navigationTitle)
         }
     }
 }
 
 struct UserListView_Previews: PreviewProvider {
     static var previews: some View {
-        UserListView()
+        let repo = GitHubUsersRepository()
+
+        TabView {
+            UserListView(vm: CombineUserListViewModel(repo: repo))
+                .tabItem { Text("Combine") }
+
+            UserListView(vm: ConcurrencyUserListViewModel(repo: repo))
+                .tabItem { Text("Concurrency") }
+        }
     }
 }

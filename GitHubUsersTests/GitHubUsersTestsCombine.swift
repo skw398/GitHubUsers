@@ -1,5 +1,5 @@
 //
-//  GitHubUsersTests.swift
+//  GitHubUsersTestsCombine.swift
 //  GitHubUsersTests
 //
 //  Created by Shigenari Oshio on 2023/12/01.
@@ -10,11 +10,12 @@ import Combine
 @testable import GitHubUsers
 import XCTest
 
-final class GitHubUsersTests: XCTestCase {
+@MainActor
+final class GitHubUsersTestsCombine: XCTestCase {
     var mock = GitHubUsersRepositoryProtocolMock()
 
     func testFetchUsersSuccess() throws {
-        mock.fetchUsersHandler = { _, _ in
+        mock.combineFetchUsersHandler = { _, _ in
             Future<[User], SessionTaskError> { promise in
                 promise(.success(
                     [.init(
@@ -26,23 +27,23 @@ final class GitHubUsersTests: XCTestCase {
                 ))
             }
         }
-        let model = UserListViewModel(repo: mock)
+        let model = CombineUserListViewModel(repo: mock)
         model.fetchUsers()
 
-        XCTAssertEqual(mock.fetchUsersCallCount, 1)
+        XCTAssertEqual(mock.combineFetchUsersCallCount, 1)
         XCTAssertEqual(model.users.count, 1)
     }
 
     func testFetchUsersFailure() throws {
-        mock.fetchUsersHandler = { _, _ in
+        mock.combineFetchUsersHandler = { _, _ in
             Future<[User], SessionTaskError> { promise in
                 promise(.failure(.connectionError(NSError())))
             }
         }
-        let model = UserListViewModel(repo: mock)
+        let model = CombineUserListViewModel(repo: mock)
         model.fetchUsers()
 
-        XCTAssertEqual(mock.fetchUsersCallCount, 1)
+        XCTAssertEqual(mock.combineFetchUsersCallCount, 1)
         XCTAssertTrue(model.showError.isShowing)
     }
 }

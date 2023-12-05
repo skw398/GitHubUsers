@@ -9,13 +9,23 @@ import Combine
 class GitHubUsersRepositoryProtocolMock: GitHubUsersRepositoryProtocol {
     init() {}
 
-    private(set) var fetchUsersCallCount = 0
-    var fetchUsersHandler: ((Int, Int) -> (Future<[User], SessionTaskError>))?
+    private(set) var combineFetchUsersCallCount = 0
+    var combineFetchUsersHandler: ((Int, Int) -> (Future<[User], SessionTaskError>))?
     func fetchUsers(userCount: Int, startId: Int) -> Future<[User], SessionTaskError> {
-        fetchUsersCallCount += 1
-        if let fetchUsersHandler = fetchUsersHandler {
-            return fetchUsersHandler(userCount, startId)
+        combineFetchUsersCallCount += 1
+        if let combineFetchUsersHandler = combineFetchUsersHandler {
+            return combineFetchUsersHandler(userCount, startId)
         }
         fatalError("fetchUsersHandler returns can't have a default value thus its handler must be set")
+    }
+
+    private(set) var concurrencyFetchUsersHandlerCallCount = 0
+    var concurrencyFetchUsersHandler: ((Int, Int) async throws -> ([User]))?
+    func fetchUsers(userCount: Int, startId: Int) async throws -> [User] {
+        concurrencyFetchUsersHandlerCallCount += 1
+        if let concurrencyFetchUsersHandler = concurrencyFetchUsersHandler {
+            return try await concurrencyFetchUsersHandler(userCount, startId)
+        }
+        return [User]()
     }
 }

@@ -8,24 +8,28 @@
 import Combine
 import Foundation
 
-final class UserListViewModel: ObservableObject {
+class BaseUserListViewModel<TaskType> {
     @Published var users: [User] = []
     @Published var isLoading = false
     @Published var showError: (isShowing: Bool, message: String) = (false, "")
 
-    private let repo: GitHubUsersRepositoryProtocol
-    private var fetchUsersTask: AnyCancellable? = nil
+    var fetchUsersTask: TaskType?
+
+    let repo: GitHubUsersRepositoryProtocol
 
     init(repo: GitHubUsersRepositoryProtocol) {
         self.repo = repo
     }
+}
+
+final class CombineUserListViewModel: BaseUserListViewModel<AnyCancellable>, UserListViewModelProtocol {
+    var navigationTitle: String = "Combine"
 
     func fetchUsers() {
         isLoading = true
 
         fetchUsersTask?.cancel()
         fetchUsersTask = repo.fetchUsers(userCount: 20, startId: users.last?.id ?? 0)
-//            .delay(for: .seconds(0.5), scheduler: RunLoop.main) // デバッグ
             .sink(
                 receiveCompletion: { [weak self] completion in
                     guard let self else { return }
@@ -43,5 +47,26 @@ final class UserListViewModel: ObservableObject {
                     self.users += users
                 }
             )
+    }
+}
+
+@MainActor
+final class ConcurrencyUserListViewModel: BaseUserListViewModel<Task<Void, Error>>, UserListViewModelProtocol {
+    var navigationTitle: String = "Concurrency"
+
+    func fetchUsers() {
+        isLoading = true
+
+        fetchUsersTask?.cancel()
+        fetchUsersTask = Task {
+            defer { isLoading = false }
+
+            do {
+                let users = try await repo.fetchUsers(userCount: 20, startId: users.last?.id ?? 0)
+                self.users += users
+            } catch {
+                self.showError = (true, error.localizedDescription)
+            }
+        }
     }
 }
