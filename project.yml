@@ -1,0 +1,33 @@
+name: GitHubUsers
+
+options:
+  bundleIdPrefix: com.skw398
+  deploymentTarget:
+    iOS: 15.0
+  postGenCommand: pod install
+  
+settings:
+  GENERATE_INFOPLIST_FILE: YES
+  MARKETING_VERSION: 1.0.0
+  CURRENT_PROJECT_VERSION: 1
+  
+targets:
+  GitHubUsers:
+    type: application
+    platform: iOS
+    sources:
+      - path: GitHubUsers
+    info:
+      path: GitHubUsers/info.plist
+      properties:
+        UILaunchScreen: ""
+
+  GitHubUsersTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources:
+      - path: GitHubUsersTests
+    info:
+      path: GitHubUsersTests/info.plist
+    dependencies:
+      - target: GitHubUsers
