@@ -12,7 +12,7 @@ import XCTest
 
 @MainActor
 final class GitHubUsersTestsCombine: XCTestCase {
-    var mock = GitHubUsersRepositoryProtocolMock()
+    let mock = GitHubUsersRepositoryProtocolMock()
 
     func testFetchUsersSuccess() throws {
         mock.combineFetchUsersHandler = { _, _ in
@@ -27,7 +27,7 @@ final class GitHubUsersTestsCombine: XCTestCase {
                 ))
             }
         }
-        let model = CombineUserListViewModel(repo: mock)
+        let model = UserListViewModelImplWithCombine(repo: mock)
         model.fetchUsers()
 
         XCTAssertEqual(mock.combineFetchUsersCallCount, 1)
@@ -40,7 +40,7 @@ final class GitHubUsersTestsCombine: XCTestCase {
                 promise(.failure(.connectionError(NSError())))
             }
         }
-        let model = CombineUserListViewModel(repo: mock)
+        let model = UserListViewModelImplWithCombine(repo: mock)
         model.fetchUsers()
 
         XCTAssertEqual(mock.combineFetchUsersCallCount, 1)

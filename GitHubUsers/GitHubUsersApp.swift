@@ -9,15 +9,15 @@ import SwiftUI
 
 @main
 struct GitHubUsersApp: App {
-    let repo = GitHubUsersRepository()
+    let repo = GitHubUsersRepositoryImpl()
 
     var body: some Scene {
         WindowGroup {
             TabView {
-                UserListView(vm: CombineUserListViewModel(repo: repo))
+                UserListView(vm: UserListViewModelImplWithCombine(repo: repo))
                     .tabItem { Text("Combine") }
 
-                UserListView(vm: ConcurrencyUserListViewModel(repo: repo))
+                UserListView(vm: UserListViewModelImplWithConcurrency(repo: repo))
                     .tabItem { Text("Concurrency") }
             }
         }

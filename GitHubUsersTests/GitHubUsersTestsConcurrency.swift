@@ -11,7 +11,7 @@ import XCTest
 
 @MainActor
 final class GitHubUsersTestsConcurrency: XCTestCase {
-    var mock = GitHubUsersRepositoryProtocolMock()
+    let mock = GitHubUsersRepositoryProtocolMock()
 
     func testFetchUsersSuccess() async throws {
         mock.concurrencyFetchUsersHandler = { _, _ async throws -> [User] in
@@ -22,7 +22,7 @@ final class GitHubUsersTestsConcurrency: XCTestCase {
                 avatarUrl: .init(string: "https://avatars.githubusercontent.com/u/114917347?v=4")!
             )]
         }
-        let model = ConcurrencyUserListViewModel(repo: mock)
+        let model = UserListViewModelImplWithConcurrency(repo: mock)
         model.fetchUsers()
 
         // fetchUsers()の中でTask.init()をやっているためsleepしている。
@@ -39,7 +39,7 @@ final class GitHubUsersTestsConcurrency: XCTestCase {
         mock.concurrencyFetchUsersHandler = { _, _ in
             throw SessionTaskError.connectionError(NSError())
         }
-        let model = ConcurrencyUserListViewModel(repo: mock)
+        let model = UserListViewModelImplWithConcurrency(repo: mock)
         model.fetchUsers()
 
         try await Task.sleep(nanoseconds: UInt64(0.2 * 1_000_000_000))

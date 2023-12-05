@@ -11,9 +11,9 @@ import Foundation
 final class GitHubUsersRequest: Request {
     typealias Response = [User]
 
-    var baseURL: URL = .init(string: "https://api.github.com")!
-    var path: String = "/users"
-    var method: HTTPMethod = .get
+    let baseURL: URL = .init(string: "https://api.github.com")!
+    let path: String = "/users"
+    let method: HTTPMethod = .get
 
     var queryParameters: [String: Any]? { _queryParameters }
     private var _queryParameters: [String: Any]? = nil
@@ -25,7 +25,7 @@ final class GitHubUsersRequest: Request {
         ]
     }
 
-    var dataParser: DataParser = GitHubUsersDataParser()
+    let dataParser: DataParser = GitHubUsersDataParser()
     // Decodableにパースする独自のDataParser
     private class GitHubUsersDataParser: DataParser {
         var contentType: String? = "application/json"

@@ -54,13 +54,13 @@ struct UserListView<ViewModel: UserListViewModelProtocol>: View {
 
 struct UserListView_Previews: PreviewProvider {
     static var previews: some View {
-        let repo = GitHubUsersRepository()
+        let repo = GitHubUsersRepositoryImpl()
 
         TabView {
-            UserListView(vm: CombineUserListViewModel(repo: repo))
+            UserListView(vm: UserListViewModelImplWithCombine(repo: repo))
                 .tabItem { Text("Combine") }
 
-            UserListView(vm: ConcurrencyUserListViewModel(repo: repo))
+            UserListView(vm: UserListViewModelImplWithConcurrency(repo: repo))
                 .tabItem { Text("Concurrency") }
         }
     }

@@ -22,8 +22,8 @@ class BaseUserListViewModel<TaskType> {
     }
 }
 
-final class CombineUserListViewModel: BaseUserListViewModel<AnyCancellable>, UserListViewModelProtocol {
-    var navigationTitle: String = "Combine"
+final class UserListViewModelImplWithCombine: BaseUserListViewModel<AnyCancellable>, UserListViewModelProtocol {
+    let navigationTitle: String = "Combine"
 
     func fetchUsers() {
         isLoading = true
@@ -51,8 +51,8 @@ final class CombineUserListViewModel: BaseUserListViewModel<AnyCancellable>, Use
 }
 
 @MainActor
-final class ConcurrencyUserListViewModel: BaseUserListViewModel<Task<Void, Error>>, UserListViewModelProtocol {
-    var navigationTitle: String = "Concurrency"
+final class UserListViewModelImplWithConcurrency: BaseUserListViewModel<Task<Void, Error>>, UserListViewModelProtocol {
+    let navigationTitle: String = "Concurrency"
 
     func fetchUsers() {
         isLoading = true
